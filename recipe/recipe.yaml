@@ -1,6 +1,7 @@
 context:
   name: raysect
   version: "0.8.1"
+  build: 1
 
 package:
   name: ${{ name|lower }}
@@ -11,13 +12,15 @@ source:
   sha256: 6b47f06cf58e6bf021606aa3a7b42f0a200f63d8695e01a6274941dedf3685bb
 
 build:
+  number: ${{ build|int + (microarch_level|int) * 100 }}
   script: ${{ PYTHON }} -m pip install --no-build-isolation --no-deps -vv .
-  number: 0
   skip:
     - win
 
 requirements:
   build:
+    - if: microarch_level|int > 0
+      then: x86_64-microarch-level ${{ microarch_level }}
     - ${{ compiler("c") }}
     - ${{ stdlib("c") }}
     - if: build_platform != target_platform
