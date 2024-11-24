@@ -12,7 +12,7 @@ source:
 
 build:
   script: ${{ PYTHON }} -m pip install --no-build-isolation --no-deps -vv .
-  number: 0
+  number: 1
   skip:
     - win
 
@@ -36,6 +36,8 @@ requirements:
   run:
     - python
     - matplotlib-base
+  run_exports:
+    - ${{ pin_subpackage("raysect", lower_bound="x.x.x", upper_bound="x.x.x") }}
 
 tests:
   - python:
