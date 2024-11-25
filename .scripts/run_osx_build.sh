@@ -82,6 +82,8 @@ else
     ( startgroup "Inspecting artifacts" ) 2> /dev/null
 
     # inspect_artifacts was only added in conda-forge-ci-setup 4.9.4
+    # TEMPORARY: Set CONDA_BLD_PATH for inspect_artifacts to recognize the artifacts directory
+    export CONDA_BLD_PATH=${MINIFORGE_HOME}/conda-bld
     command -v inspect_artifacts >/dev/null 2>&1 && inspect_artifacts --recipe-dir ./recipe -m ./.ci_support/${CONFIG}.yaml || echo "inspect_artifacts needs conda-forge-ci-setup >=4.9.4"
 
     ( endgroup "Inspecting artifacts" ) 2> /dev/null
