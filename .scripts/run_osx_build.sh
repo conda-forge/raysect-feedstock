@@ -6,10 +6,11 @@ source .scripts/logging_utils.sh
 
 set -xe
 
-MINIFORGE_HOME=${MINIFORGE_HOME:-${HOME}/miniforge3}
-MINIFORGE_HOME=${MINIFORGE_HOME%/} # remove trailing slash
+MINIFORGE_HOME="${MINIFORGE_HOME:-${HOME}/miniforge3}"
+MINIFORGE_HOME="${MINIFORGE_HOME%/}" # remove trailing slash
+export CONDA_BLD_PATH="${CONDA_BLD_PATH:-${MINIFORGE_HOME}/conda-bld}"
 ( startgroup "Provisioning base env with pixi" ) 2> /dev/null
-mkdir -p ${MINIFORGE_HOME}
+mkdir -p "${MINIFORGE_HOME}"
 curl -fsSL https://pixi.sh/install.sh | bash
 export PATH="~/.pixi/bin:$PATH"
 arch=$(uname -m)
@@ -68,12 +69,12 @@ if [[ "${BUILD_WITH_CONDA_DEBUG:-0}" == 1 ]]; then
 else
 
     if [[ "${HOST_PLATFORM}" != "${BUILD_PLATFORM}" ]]; then
-        EXTRA_CB_OPTIONS="${EXTRA_CB_OPTIONS:-} --no-test"
+        EXTRA_CB_OPTIONS="${EXTRA_CB_OPTIONS:-} --test skip"
     fi
 
     rattler-build build --recipe ./recipe \
         -m ./.ci_support/${CONFIG}.yaml \
-        --output-dir ${MINIFORGE_HOME}/conda-bld ${EXTRA_CB_OPTIONS:-} \
+        ${EXTRA_CB_OPTIONS:-} \
         --target-platform "${HOST_PLATFORM}" \
         --extra-meta flow_run_id="$flow_run_id" \
         --extra-meta remote_url="$remote_url" \
@@ -82,8 +83,6 @@ else
     ( startgroup "Inspecting artifacts" ) 2> /dev/null
 
     # inspect_artifacts was only added in conda-forge-ci-setup 4.9.4
-    # TEMPORARY: Set CONDA_BLD_PATH for inspect_artifacts to recognize the artifacts directory
-    export CONDA_BLD_PATH=${MINIFORGE_HOME}/conda-bld
     command -v inspect_artifacts >/dev/null 2>&1 && inspect_artifacts --recipe-dir ./recipe -m ./.ci_support/${CONFIG}.yaml || echo "inspect_artifacts needs conda-forge-ci-setup >=4.9.4"
 
     ( endgroup "Inspecting artifacts" ) 2> /dev/null
