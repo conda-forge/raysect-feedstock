@@ -1,6 +1,6 @@
 context:
   name: raysect
-  version: "0.8.1"
+  version: "0.9.0"
 
 package:
   name: ${{ name|lower }}
@@ -8,11 +8,11 @@ package:
 
 source:
   url: https://github.com/${{ name|lower }}/source/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: 6b47f06cf58e6bf021606aa3a7b42f0a200f63d8695e01a6274941dedf3685bb
+  sha256: cdce889c649b0432dc670363cb9ebd0a3ca9c4a8916990f59acf1246f0077668
 
 build:
   script: ${{ PYTHON }} -m pip install --no-build-isolation --no-deps -vv .
-  number: 2
+  number: 0
   skip:
     - win
 
