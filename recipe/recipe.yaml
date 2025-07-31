@@ -21,7 +21,7 @@ build:
 requirements:
   build:
     - if: microarch_level|int > 0
-      then: x86_64-microarch-level ${{ microarch_level }}
+      then: x86_64-microarch-level ${{ microarch_level }}.*
     - ${{ compiler("c") }}
     - ${{ stdlib("c") }}
     - ninja
