@@ -10,7 +10,7 @@ source:
   url: https://github.com/${{ name|lower }}/source/archive/refs/tags/v${{ version }}.tar.gz
   sha256: cdce889c649b0432dc670363cb9ebd0a3ca9c4a8916990f59acf1246f0077668
   patches:
-    - numpy_meson_des.patch
+    - numpy_meson_deps.patch
 
 build:
   number: 0
