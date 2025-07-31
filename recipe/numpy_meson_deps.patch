@@ -1,0 +1,11 @@
+--- a/meson.build
++++ b/meson.build
+@@ -10,7 +10,7 @@ project('raysect', 'cython',
+ meson.add_dist_script('dev/build/add_version_file_to_dist.sh')
+
+ py = import('python').find_installation(pure: false)
+-numpy = dependency('numpy', method: 'config-tool')
++numpy = dependency('numpy')
+ fs = import('fs')
+
+ # disabling explicit noexcept until pycharm fixes their cython 3 support (causes a large number of build warnings)
