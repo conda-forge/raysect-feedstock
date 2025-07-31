@@ -1,6 +1,7 @@
 context:
   name: raysect
   version: "0.9.0"
+  build: 1
 
 package:
   name: ${{ name|lower }}
@@ -13,12 +14,14 @@ source:
     - cross_compile.patch
 
 build:
-  number: 0
+  number: ${{ build|int + (microarch_level|int) * 100 }}
   skip:
     - win
 
 requirements:
   build:
+    - if: microarch_level|int > 0
+      then: x86_64-microarch-level ${{ microarch_level }}
     - ${{ compiler("c") }}
     - ${{ stdlib("c") }}
     - ninja
