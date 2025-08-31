@@ -44,7 +44,7 @@ requirements:
     - matplotlib-base
     - opencv
   run_exports:
-    - ${{ pin_subpackage("raysect", lower_bound="x.x.x", upper_bound="x.x.x") }}
+    - ${{ pin_subpackage("raysect", upper_bound="x.x") }}
 
 tests:
   - python:
