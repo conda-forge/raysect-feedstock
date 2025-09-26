@@ -19,4 +19,4 @@ $PYTHON -m build -w -n -x \
     -Csetup-args=${MESON_ARGS_REDUCED// / -Csetup-args=} \
     || (cat builddir/meson-logs/meson-log.txt && exit 1)
 
-$PYTHON -m pip install --find-links dist raysect
+$PYTHON -m pip install --find-links dist ${PKG_NAME} --no-deps --force-reinstall -vv
