@@ -13,7 +13,7 @@ source:
     - cross_compile.patch
 
 build:
-  number: 0
+  number: 1
   skip:
     - win
 
@@ -52,21 +52,26 @@ tests:
         - raysect
         - raysect.core
         - raysect.optical
+        - raysect.optical.library
+        - raysect.optical.observer
         - raysect.primitive
+        - raysect.primitive.lens
 
   - script:
-      - if: unix
-        then:
-          - python -c "import raysect; print(raysect.__path__[0])" | xargs python -m unittest discover -v -s
-      - if: win
-        then:
-          - python -c "import raysect; print(raysect.__path__[0])" | python -m unittest discover -v -s ?
-
-
+      - python -m unittest discover raysect -v
 
 about:
   homepage: http://www.raysect.org
   summary: A Ray-tracing Framework for Science and Engineering
+  description: |
+    A ray-tracing framework for optical/non-optical physics simulations.
+
+    The aims of the Raysect project are as follows:
+
+    - develop a ray-tracer that is easy for scientists and engineers to use and extend
+    - the raytracer must be robust and high precision
+
+    The general development philosophy is ease of use trumps performance, but performance is not to be ignored.
   license: BSD-3-Clause
   license_file: LICENSE.txt
   documentation: http://www.raysect.org
