@@ -13,7 +13,7 @@ source:
     - cross_compile.patch
 
 build:
-  number: 2
+  number: 3
   skip:
     - win
 
